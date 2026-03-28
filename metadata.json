@@ -1,0 +1,7 @@
+{
+  "name": "FTW (Find The Way)",
+  "description": "A Gen Z navigation app for effortless commutes and finding the best vibes in the city.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

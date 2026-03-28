@@ -1,0 +1,80 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Represents a user in the app with their live location status.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique ID of the user." },
+        "displayName": { "type": "string", "description": "The name of the user." },
+        "photoURL": { "type": "string", "description": "The profile picture URL of the user." },
+        "location": {
+          "type": "object",
+          "properties": {
+            "latitude": { "type": "number" },
+            "longitude": { "type": "number" }
+          },
+          "description": "The current latitude and longitude of the user."
+        },
+        "isLocationOn": { "type": "boolean", "description": "Whether the user has enabled live location sharing." },
+        "lastSeen": { "type": "string", "format": "date-time", "description": "The last time the user's location was updated." }
+      },
+      "required": ["uid", "displayName", "isLocationOn"]
+    },
+    "VibeCheck": {
+      "title": "VibeCheck",
+      "description": "A ping sent from one user to another.",
+      "type": "object",
+      "properties": {
+        "from": { "type": "string", "description": "The UID of the sender." },
+        "fromName": { "type": "string", "description": "The name of the sender." },
+        "to": { "type": "string", "description": "The UID of the recipient." },
+        "timestamp": { "type": "string", "format": "date-time", "description": "The time the vibe check was sent." }
+      },
+      "required": ["from", "fromName", "to", "timestamp"]
+    },
+    "SavedList": {
+      "title": "SavedList",
+      "description": "A collection of saved places.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "icon": { "type": "string" },
+        "isPrivate": { "type": "boolean" },
+        "placeCount": { "type": "number" }
+      },
+      "required": ["id", "name", "icon", "isPrivate", "placeCount"]
+    },
+    "LabeledPlace": {
+      "title": "LabeledPlace",
+      "description": "A place with a custom label like Home or Work.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "address": { "type": "string" },
+        "icon": { "type": "string" }
+      },
+      "required": ["id", "label", "address", "icon"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "The collection of users and their live location data."
+    },
+    "/users/{userId}/savedLists/{listId}": {
+      "schema": "SavedList",
+      "description": "A user's saved lists."
+    },
+    "/users/{userId}/labeledPlaces/{placeId}": {
+      "schema": "LabeledPlace",
+      "description": "A user's labeled places."
+    },
+    "/vibeChecks/{vibeCheckId}": {
+      "schema": "VibeCheck",
+      "description": "The collection of real-time pings between users."
+    }
+  }
+}
